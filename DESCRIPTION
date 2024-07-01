@@ -1,0 +1,21 @@
+Package: scatterpie.extend
+Type: Package
+Title: Addon to the Scatterpie Package
+Version: 0.2.0
+Authors@R: person("Gabelberger", "Fabian", email =
+    "fabian.gabelberger@wifo.ac.at", role = c("cre", "aut"))
+Description: Adds neat funtionality to the scatterpie package.  This
+    functionality includes the ability to plot the scatterpies in
+    accordance with the underlying map.
+License: MIT + file LICENSE
+Depends:
+    ggplot2 (>= 3.4.0),
+    scatterpie (>= 0.2.1),
+    sf (>= 1.0)
+Imports:
+    dplyr (>= 1.0.0),
+    magrittr
+Encoding: UTF-8
+LazyData: true
+RoxyGen: list(markdown = TRUE)
+RoxygenNote: 7.3.1
