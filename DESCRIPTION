@@ -10,9 +10,9 @@ Description: Adds neat funtionality to the scatterpie package.  This
 License: MIT + file LICENSE
 Depends:
     ggplot2 (>= 3.4.0),
-    scatterpie (>= 0.2.1),
-    sf (>= 1.0)
+    scatterpie (>= 0.2.1)
 Imports:
+    sf (>= 1.0),
     dplyr (>= 1.0.0),
     magrittr
 Encoding: UTF-8
