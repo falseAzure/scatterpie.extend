@@ -1,6 +1,12 @@
+library(devtools)
+load_all()
 library(dplyr)
 library(data.table)
 library(readxl)
+library(sf)
+library(extrafont)
+library(extrafontdb)
+
 shp.gem <- st_read("../Uni_Studierende/input/shp_gemeinde_2020/STATISTIK_AUSTRIA_GEM_20200101Polygon.shp")
 shp.bez <- st_read("../Uni_Studierende/input/shp_bezirke/STATISTIK_AUSTRIA_POLBEZ_20200101Polygon.shp")
 
@@ -70,15 +76,15 @@ sf_object <- sf_object %>% mutate(Forst = ifelse(Typ=="Forst", studierende, 0))
 sf_object <- sf_object %>% mutate(Sonstige = ifelse(Typ=="Sonstige", studierende, 0))
 sf_object <- sf_object %>% mutate(Hochschule = ifelse(Typ=="Hochschule", studierende, 0))
 
-plot <- plot_scatterpie(sf_object, var, cols=c("Landwirtschaft", "Forst", "Hochschule", "Sonstige"), legend_name="Hochschultyp", background_plot = background_map)
-plot
-plot +
+plot <- plot_scatterpie(sf_object, var, cols=c("Landwirtschaft", "Forst", "Hochschule", "Sonstige"), legend_name="Hochschultyp", background_plot = background_map, family="Century Gothic")
+plot <- plot +
   xlab("") +
   ylab("") +
   theme_void(base_family = "Century Gothic") +
-  theme(legend.position = c(0.30, 0.68),
+  theme(legend.position= "inside",
+    legend.position.inside = c(0.30, 0.68),
         legend.key.size = unit(0.6, "cm"),
         plot.title = element_text(hjust = 0.2),
         plot.subtitle = element_text(hjust = 0.09)) +
   guides(fill = guide_legend(override.aes = list(colour = "black", size = 0.3)))
-
+plot

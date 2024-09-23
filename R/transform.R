@@ -73,8 +73,8 @@ transform_values <- function(values, sf_object, ratio = 0.08, area = FALSE, retu
 #' @param multiplier The multiplier with which the \code{values} was transformed using \code{\link{transform_values}(return_multiplier = TRUE)}.
 #' @param area A logical value indicating whether the back transformation should be based on the area instead of the radius (default is FALSE).
 #' @param digits Number of digits to round to.
-#' @param big.mark Used for prettying (longish) numerical and complex sequences.
-#' @param small.mark Used for prettying (longish) numerical and complex sequences.
+#' @param big.mark Used for formatting (big) numbers (e.g. 1,000,000).
+#' @param decimal.mark Used for formatting decimal numbers (e.g. 1.2).
 #'
 #' @examples
 #' \dontrun{
@@ -105,11 +105,11 @@ transform_values <- function(values, sf_object, ratio = 0.08, area = FALSE, retu
 #' )
 #' }
 #' @export
-transform_labeller <- function(values, multiplier, area = FALSE, digits = 2, big.mark = ",", small.mark = ".") {
+transform_labeller <- function(values, multiplier, area = FALSE, digits = 2, big.mark = ",", decimal.mark = ".") {
     if (area) {
-        return(format(signif((values/multiplier)^2, digits), big.mark = big.mark))
+        return(format(signif((values/multiplier)^2, digits), big.mark = big.mark, decimal.mark = decimal.mark))
     } else {
-        return(format(signif(values/multiplier, digits), big.mark = small.mark))
+        return(format(signif(values/multiplier, digits), , big.mark = big.mark, decimal.mark = decimal.mark))
     }
 }
 
