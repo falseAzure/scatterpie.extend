@@ -73,8 +73,10 @@ transform_values <- function(values, sf_object, ratio = 0.08, area = FALSE, retu
 #' @param multiplier The multiplier with which the \code{values} was transformed using \code{\link{transform_values}(return_multiplier = TRUE)}.
 #' @param area A logical value indicating whether the back transformation should be based on the area instead of the radius (default is FALSE).
 #' @param digits Number of digits to round to.
-#' @param big.mark Used for formatting (big) numbers (e.g. 1,000,000).
-#' @param decimal.mark Used for formatting decimal numbers (e.g. 1.2).
+#' @param big.mark A string to be used as the big mark in the labeller function (default is ".").
+#' @param decimal.mark A string to be used as the decimal mark in the labeller function (default is ",").
+#' @param scale_cut A numeric value to be used as the scale cut in the labeller function (default is NULL).
+#' @param ... Additional arguments to be passed to \code{\link[scales]{number}}.
 #'
 #' @examples
 #' \dontrun{
@@ -105,11 +107,11 @@ transform_values <- function(values, sf_object, ratio = 0.08, area = FALSE, retu
 #' )
 #' }
 #' @export
-transform_labeller <- function(values, multiplier, area = FALSE, digits = 2, big.mark = ",", decimal.mark = ".") {
+transform_labeller <- function(values, multiplier, area = FALSE, digits = 2, big.mark = ",", decimal.mark = ".", scale_cut=NULL, ...) {
     if (area) {
-        return(format(signif((values/multiplier)^2, digits), big.mark = big.mark, decimal.mark = decimal.mark))
+        return(scales::number(signif((values/multiplier)^2, digits), big.mark = big.mark, decimal.mark = decimal.mark, scale_cut=scale_cut, ...))
     } else {
-        return(format(signif(values/multiplier, digits), , big.mark = big.mark, decimal.mark = decimal.mark))
+        return(scales::number(signif(values/multiplier, digits), , big.mark = big.mark, decimal.mark = decimal.mark, scale_cut=scale_cut, ...))
     }
 }
 
@@ -208,4 +210,22 @@ transform_sf <- function(sf_object, var, ratio = 0.08, area = TRUE) {
   multiplier <- transformed_data$multiplier
 
   return(list(data = data_map, multiplier = multiplier))
+}
+
+
+#' @title Short scale German
+#'
+#' @description Return a named numeric vector with German short scale abbreviations.
+#'
+#' @param space logical whether to add a space before the abbreviation
+#'
+#' @return named numeric vector
+#'
+#' @export
+cut_short_scale_german <- function(space = TRUE) {
+  out <- c(0e+00, 1e+00, Tsd. = 1e+03, Mio. = 1e+06, Mrd. = 1e+09, Bio. = 1e+12, Brd. = 1e+15, Tri. = 1e+18, Trd. = 1e+21)
+  if (space) {
+    names(out) <- paste0(" ", names(out))
+  }
+  out
 }

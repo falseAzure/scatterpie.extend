@@ -71,12 +71,13 @@ background_map <- ggplot() +
   geom_sf(data = shp.gem, fill=shp.gem$urban_rural_color, color=alpha("white", 1), linewidth=0) +
   geom_sf(data = shp.bl, fill = alpha("white", 0), color="grey20", linewidth=0.25)
 
-sf_object <- shp.gem %>% mutate(Landwirtschaft = ifelse(Typ=="Landwirtschaft", studierende, 0))
+sf_object <- sf_object %>% mutate(studierende=studierende*1000)
+sf_object <- sf_object %>% mutate(Landwirtschaft = ifelse(Typ=="Landwirtschaft", studierende, 0))
 sf_object <- sf_object %>% mutate(Forst = ifelse(Typ=="Forst", studierende, 0))
 sf_object <- sf_object %>% mutate(Sonstige = ifelse(Typ=="Sonstige", studierende, 0))
 sf_object <- sf_object %>% mutate(Hochschule = ifelse(Typ=="Hochschule", studierende, 0))
 
-plot <- plot_scatterpie(sf_object, var, cols=c("Landwirtschaft", "Forst", "Hochschule", "Sonstige"), legend_name="Hochschultyp", background_plot = background_map, family="Century Gothic")
+plot <- plot_scatterpie(sf_object, var, cols=c("Landwirtschaft", "Forst", "Hochschule", "Sonstige"), legend_name="Hochschultyp", background_plot = background_map, scale_cut=cut_short_scale_german(), family="Century Gothic")
 plot <- plot +
   xlab("") +
   ylab("") +

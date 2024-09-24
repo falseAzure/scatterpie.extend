@@ -10,7 +10,9 @@ transform_labeller(
   area = FALSE,
   digits = 2,
   big.mark = ",",
-  decimal.mark = "."
+  decimal.mark = ".",
+  scale_cut = NULL,
+  ...
 )
 }
 \arguments{
@@ -22,9 +24,13 @@ transform_labeller(
 
 \item{digits}{Number of digits to round to.}
 
-\item{big.mark}{Used for formatting (big) numbers (e.g. 1,000,000).}
+\item{big.mark}{A string to be used as the big mark in the labeller function (default is ".").}
 
-\item{decimal.mark}{Used for formatting decimal numbers (e.g. 1.2).}
+\item{decimal.mark}{A string to be used as the decimal mark in the labeller function (default is ",").}
+
+\item{scale_cut}{A numeric value to be used as the scale cut in the labeller function (default is NULL).}
+
+\item{...}{Additional arguments to be passed to \code{\link[scales]{number}}.}
 }
 \description{
 Reverses the transformation of \code{\link{transform_values}} so it can be used for the labeller in the \pkg{scatterpie} legend.

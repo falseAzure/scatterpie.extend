@@ -16,6 +16,9 @@ plot_scatterpie(
   legend.n = 3,
   color.pie = NA,
   alpha.pie = 0.9,
+  big.mark = ".",
+  decimal.mark = ",",
+  scale_cut = NULL,
   background_plot = NULL,
   ...
 )
@@ -42,6 +45,12 @@ plot_scatterpie(
 \item{color.pie}{The line color of the pie slices in the scatterpie plot (default is NA).}
 
 \item{alpha.pie}{The transparency of the pie slices in the scatterpie plot (default is 0.9).}
+
+\item{big.mark}{A string to be used as the big mark in the labeller function (default is ".").}
+
+\item{decimal.mark}{A string to be used as the decimal mark in the labeller function (default is ",").}
+
+\item{scale_cut}{A numeric value to be used as the scale cut in the labeller function (default is NULL).}
 
 \item{background_plot}{A ggplot object to be used as the background of the scatterpie plot (default is NULL.)}
 

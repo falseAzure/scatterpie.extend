@@ -1,7 +1,7 @@
 Package: scatterpie.extend
 Type: Package
 Title: Addon to the Scatterpie Package
-Version: 0.2.1
+Version: 0.2.2
 Authors@R: person("Gabelberger", "Fabian", email =
     "fabian.gabelberger@wifo.ac.at", role = c("cre", "aut"))
 Description: Adds neat funtionality to the scatterpie package.  This
@@ -14,7 +14,8 @@ Depends:
 Imports:
     sf (>= 1.0),
     dplyr (>= 1.0.0),
-    magrittr
+    scales (>= 1.3.0),
+    magrittr (>= 2.0.3)
 Encoding: UTF-8
 LazyData: true
 RoxyGen: list(markdown = TRUE)

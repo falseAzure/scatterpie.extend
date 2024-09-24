@@ -16,6 +16,9 @@
 #' @param legend.n An integer representing the number of circles in the legend.
 #' @param color.pie The line color of the pie slices in the scatterpie plot (default is NA).
 #' @param alpha.pie The transparency of the pie slices in the scatterpie plot (default is 0.9).
+#' @param big.mark A string to be used as the big mark in the labeller function (default is ".").
+#' @param decimal.mark A string to be used as the decimal mark in the labeller function (default is ",").
+#' @param scale_cut A numeric value to be used as the scale cut in the labeller function (default is NULL).
 #' @param background_plot A ggplot object to be used as the background of the scatterpie plot (default is NULL.)
 #' @param ... Additional arguments to be passed to the \code{geom_scatterpie_legend} function.
 #'
@@ -30,7 +33,21 @@
 #' @importFrom ggplot2 ggplot
 #' @importFrom scatterpie geom_scatterpie geom_scatterpie_legend
 #' @export
-plot_scatterpie <- function(sf_object, var, cols=NULL, legend_name="Typ", ratio=0.08, area=TRUE, legend.x = 142767.4, legend.y = 483225.9, legend.n = 3, color.pie = NA, alpha.pie = 0.9, background_plot = NULL, ...) {
+plot_scatterpie <- function(sf_object,
+                            var, cols=NULL,
+                            legend_name="Typ",
+                            ratio=0.08,
+                            area=TRUE,
+                            legend.x = 142767.4,
+                            legend.y = 483225.9,
+                            legend.n = 3,
+                            color.pie = NA,
+                            alpha.pie = 0.9,
+                            big.mark = ".",
+                            decimal.mark = ",",
+                            scale_cut=NULL,
+                            background_plot = NULL,
+                            ...) {
   X <- NULL
   Y <- NULL
   r <- NULL
@@ -64,7 +81,15 @@ plot_scatterpie <- function(sf_object, var, cols=NULL, legend_name="Typ", ratio=
     ) +
     scatterpie::geom_scatterpie_legend(
       radius = data_map$r,
-      labeller = function(x) transform_labeller(x, multiplier, area),
+      labeller = function(x) transform_labeller(
+        values = x,
+        multiplier = multiplier,
+        area = area,
+        digits = 2,
+        big.mark = big.mark,
+        decimal.mark = decimal.mark,
+        scale_cut=scale_cut,
+        ...=...),
       n = legend.n, x = legend.x, y = legend.y, ... = ...
     )
 
