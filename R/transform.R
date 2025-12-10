@@ -28,7 +28,13 @@
 #' }
 #' @importFrom sf st_bbox
 #' @export
-transform_values <- function(values, sf_object, ratio = 0.08, area = FALSE, return_multiplier = FALSE) {
+transform_values <- function(
+    values,
+    sf_object,
+    ratio = 0.08,
+    area = FALSE,
+    return_multiplier = FALSE
+) {
     bounding_box <- sf::st_bbox(sf_object)
 
     x_dif <- bounding_box["xmax"] - bounding_box["xmin"]
@@ -42,8 +48,8 @@ transform_values <- function(values, sf_object, ratio = 0.08, area = FALSE, retu
         max_r <- max(values, na.rm = T)
     }
 
-    ratio_values <- max_r/min_dif
-    multiplier <- signif(ratio/ratio_values, 2)
+    ratio_values <- max_r / min_dif
+    multiplier <- signif(ratio / ratio_values, 2)
 
     if (area == TRUE) {
         transformed_values <- values_sqrt * multiplier
@@ -107,11 +113,33 @@ transform_values <- function(values, sf_object, ratio = 0.08, area = FALSE, retu
 #' )
 #' }
 #' @export
-transform_labeller <- function(values, multiplier, area = FALSE, digits = 2, big.mark = ",", decimal.mark = ".", scale_cut=NULL, ...) {
+transform_labeller <- function(
+    values,
+    multiplier,
+    area = FALSE,
+    digits = 2,
+    big.mark = ",",
+    decimal.mark = ".",
+    scale_cut = NULL,
+    ...
+) {
     if (area) {
-        return(scales::number(signif((values/multiplier)^2, digits), big.mark = big.mark, decimal.mark = decimal.mark, scale_cut=scale_cut, ...))
+        return(scales::number(
+            signif((values / multiplier)^2, digits),
+            big.mark = big.mark,
+            decimal.mark = decimal.mark,
+            scale_cut = scale_cut,
+            ...
+        ))
     } else {
-        return(scales::number(signif(values/multiplier, digits), , big.mark = big.mark, decimal.mark = decimal.mark, scale_cut=scale_cut, ...))
+        return(scales::number(
+            signif(values / multiplier, digits),
+            ,
+            big.mark = big.mark,
+            decimal.mark = decimal.mark,
+            scale_cut = scale_cut,
+            ...
+        ))
     }
 }
 
@@ -166,16 +194,21 @@ get_centroids <- function(sf_object) {
 #' @importFrom dplyr mutate
 #' @export
 transform_data <- function(data, var, sf_object, ratio = 0.08, area = TRUE) {
-    transformed_data <- transform_values(data[[var]], sf_object = sf_object, ratio = ratio, area = area, return_multiplier = TRUE)
+    transformed_data <- transform_values(
+        data[[var]],
+        sf_object = sf_object,
+        ratio = ratio,
+        area = area,
+        return_multiplier = TRUE
+    )
     multiplier <- transformed_data$multiplier
     radius <- transformed_data$values
     data_map <- data %>%
-      dplyr::mutate(r = radius)
+        dplyr::mutate(r = radius)
     data_map <- data_map %>%
-      dplyr::mutate(delta = 0)
+        dplyr::mutate(delta = 0)
     return(list(data = data_map, multiplier = multiplier))
 }
-
 
 
 #' @title Transform Spatial Data
@@ -203,13 +236,19 @@ transform_data <- function(data, var, sf_object, ratio = 0.08, area = TRUE) {
 #' }
 #' @export
 transform_sf <- function(sf_object, var, ratio = 0.08, area = TRUE) {
-  data <- get_centroids(sf_object = sf_object)
+    data <- get_centroids(sf_object = sf_object)
 
-  transformed_data <- transform_data(data = data, var = var, sf_object = sf_object, ratio = ratio, area = area)
-  data_map <- transformed_data$data
-  multiplier <- transformed_data$multiplier
+    transformed_data <- transform_data(
+        data = data,
+        var = var,
+        sf_object = sf_object,
+        ratio = ratio,
+        area = area
+    )
+    data_map <- transformed_data$data
+    multiplier <- transformed_data$multiplier
 
-  return(list(data = data_map, multiplier = multiplier))
+    return(list(data = data_map, multiplier = multiplier))
 }
 
 
@@ -223,9 +262,19 @@ transform_sf <- function(sf_object, var, ratio = 0.08, area = TRUE) {
 #'
 #' @export
 cut_short_scale_german <- function(space = TRUE) {
-  out <- c(0e+00, 1e+00, Tsd. = 1e+03, Mio. = 1e+06, Mrd. = 1e+09, Bio. = 1e+12, Brd. = 1e+15, Tri. = 1e+18, Trd. = 1e+21)
-  if (space) {
-    names(out) <- paste0(" ", names(out))
-  }
-  out
+    out <- c(
+        0e+00,
+        1e+00,
+        Tsd. = 1e+03,
+        Mio. = 1e+06,
+        Mrd. = 1e+09,
+        Bio. = 1e+12,
+        Brd. = 1e+15,
+        Tri. = 1e+18,
+        Trd. = 1e+21
+    )
+    if (space) {
+        names(out) <- paste0(" ", names(out))
+    }
+    out
 }
