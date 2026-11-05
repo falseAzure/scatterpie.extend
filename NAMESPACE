@@ -8,14 +8,20 @@ export(transform_data)
 export(transform_labeller)
 export(transform_sf)
 export(transform_values)
-importFrom(dplyr,as_tibble)
-importFrom(dplyr,filter)
-importFrom(dplyr,mutate)
-importFrom(dplyr,select)
+importFrom(dplyr,
+  as_tibble,
+  filter,
+  mutate,
+  select
+)
 importFrom(ggplot2,ggplot)
 importFrom(magrittr,"%>%")
-importFrom(scatterpie,geom_scatterpie)
-importFrom(scatterpie,geom_scatterpie_legend)
-importFrom(sf,st_bbox)
-importFrom(sf,st_coordinates)
-importFrom(sf,st_point_on_surface)
+importFrom(scatterpie,
+  geom_scatterpie,
+  geom_scatterpie_legend
+)
+importFrom(sf,
+  st_bbox,
+  st_coordinates,
+  st_point_on_surface
+)
